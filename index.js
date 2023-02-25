@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
-const svg = require('./lib/svg');
+const SVG = require('./lib/svg');
 const { Triangle, Circle, Square } = require('./lib/shapes');
+const fs = require('fs');
 
 function question() {
     inquirer.prompt([
@@ -36,6 +37,19 @@ function question() {
         } if (responds.shapeType === "square") {
             shape = new Square
         }
+        shape.setColor(responds.shapeColor);
+        const svg = new SVG()
+        svg.setText(responds.text);
+        svg.setShape(shape);
+        fs.writeFileSync('logo.svg', svg.render())
     })
 }
+
+
+
+
+
 question();
+// FileSystem.writeFileSync('logo.svg', svg(responds.text, responds.textColor, responds))
+
+//     .catch((err) => console.log(err));
